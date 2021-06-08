@@ -13,7 +13,7 @@
         :placeholder="placeholder"
         :aria-label="placeholder"
         :value="inputValue"
-        @focus="isFocused = true"
+        @focus="focused(true)"
         @blur="handleBlur"
         @input="handleInput($event.target.value)"
         autocomplete="off"
@@ -117,6 +117,12 @@ export default {
   },
 
   methods: {
+  
+    focused (v) {
+      this.isFocused = v;
+      this.$emit('focused', this.isFocused)
+    },
+    
     resizeList(el) {
       const rect = el.getBoundingClientRect()
       const listStyle = this.$refs.list.$el.style
@@ -148,7 +154,7 @@ export default {
       if (tgt && tgt.classList.contains('vbst-item')) {
         return
       }
-      this.isFocused = false
+      this.focused(false)
     },
 
     handleInput(newValue) {
